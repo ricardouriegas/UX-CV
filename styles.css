@@ -53,6 +53,7 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Enhanced particle container with gradient overlay */
 .particle-container {
     position: fixed;
     top: 0;
@@ -61,6 +62,75 @@ html {
     height: 100%;
     z-index: -1;
     overflow: hidden;
+    background: linear-gradient(120deg, 
+        rgba(var(--bg-color), 0.8), 
+        rgba(var(--bg-color), 0.5));
+}
+
+/* Floating geometric elements styling */
+.floating-element {
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(5px);
+    will-change: transform;
+    transition: background-color 1s ease;
+}
+
+.floating-element.square {
+    border-radius: 4px;
+}
+
+.floating-element.triangle {
+    width: 0 !important;
+    height: 0 !important;
+    background-color: transparent !important;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 85px solid currentColor;
+}
+
+.floating-element.hexagon {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* Extended animation keyframes for floating elements */
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0) translateX(0) rotate(0deg) scale(1); 
+    }
+    25% { 
+        transform: translateY(-30px) translateX(15px) rotate(5deg) scale(1.05); 
+    }
+    50% { 
+        transform: translateY(-15px) translateX(30px) rotate(10deg) scale(1); 
+    }
+    75% { 
+        transform: translateY(-25px) translateX(5px) rotate(5deg) scale(0.95); 
+    }
+}
+
+/* Gradient animation for background */
+.page-container::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, 
+        rgba(var(--primary-color), 0.03) 0%, 
+        rgba(var(--secondary-color), 0.02) 30%, 
+        rgba(var(--accent-color), 0.01) 70%, 
+        transparent 100%);
+    animation: rotate 30s linear infinite;
+    z-index: -2;
+    opacity: 0.5;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .page-container {
@@ -156,10 +226,6 @@ header {
 
 .profile-card:hover .profile-info {
     transform: translateY(0);
-}
-
-.profile-card:hover {
-    transform: rotateY(15deg);
 }
 
 h1 {
@@ -534,4 +600,11 @@ footer {
 .project-card:hover, 
 .contact-method:hover {
     border-color: rgba(var(--primary-color), 0.3);
+}
+
+body.dark-theme .about-section, 
+body.dark-theme .skill-card, 
+body.dark-theme .project-card, 
+body.dark-theme .contact-method {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }

@@ -1,11 +1,23 @@
-// Particle.js configuration - more Apple-like subtle particles
+// Enhanced Particle.js configuration for a more dynamic background
 particlesJS("particles-js", {
     particles: {
-        number: { value: 30, density: { enable: true, value_area: 800 } },
-        color: { value: "#6d8dff" },
-        shape: { type: "circle" },
-        opacity: { value: 0.3, random: true, anim: { enable: true, speed: 0.2, opacity_min: 0.1, sync: false } },
-        size: { value: 2, random: true },
+        number: { value: 100, density: { enable: true, value_area: 1000 } },
+        color: { value: ["#6d8dff", "#38caff", "#ff64c8", "#836FFF"] },
+        shape: { 
+            type: ["circle", "triangle", "edge"],
+            stroke: { width: 0, color: "#000000" },
+            polygon: { nb_sides: 5 }
+        },
+        opacity: { 
+            value: 0.4, 
+            random: true, 
+            anim: { enable: true, speed: 0.3, opacity_min: 0.1, sync: false } 
+        },
+        size: { 
+            value: 5, 
+            random: true, 
+            anim: { enable: true, speed: 2, size_min: 0.5, sync: false } 
+        },
         line_linked: {
             enable: true,
             distance: 150,
@@ -15,12 +27,13 @@ particlesJS("particles-js", {
         },
         move: {
             enable: true,
-            speed: 1,
+            speed: 1.5,
             direction: "none",
             random: true,
             straight: false,
             out_mode: "out",
-            bounce: false
+            bounce: false,
+            attract: { enable: true, rotateX: 600, rotateY: 1200 }
         }
     },
     interactivity: {
@@ -31,25 +44,74 @@ particlesJS("particles-js", {
             resize: true
         },
         modes: {
-            bubble: { distance: 200, size: 3, duration: 2, opacity: 0.3, speed: 3 },
-            push: { particles_nb: 2 }
+            bubble: { distance: 200, size: 6, duration: 2, opacity: 0.4, speed: 3 },
+            push: { particles_nb: 4 },
+            remove: { particles_nb: 2 }
         }
     },
     retina_detect: true
 });
 
-// Theme toggle
+// Add floating geometric shapes to the background
+document.addEventListener('DOMContentLoaded', function() {
+    createFloatingElements();
+    
+    // Create dynamic floating elements
+    function createFloatingElements() {
+        const container = document.querySelector('.particle-container');
+        const shapes = ['circle', 'square', 'triangle', 'hexagon'];
+        const colors = ['var(--primary-color)', 'var(--secondary-color)', 'var(--accent-color)'];
+        
+        // Create 15 floating elements
+        for (let i = 0; i < 15; i++) {
+            const element = document.createElement('div');
+            const shape = shapes[Math.floor(Math.random() * shapes.length)];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            element.classList.add('floating-element', shape);
+            element.style.backgroundColor = color;
+            element.style.opacity = (Math.random() * 0.12 + 0.03).toString(); // 0.03 to 0.15
+            
+            // Random size between 20 and 120px
+            const size = Math.floor(Math.random() * 100 + 20);
+            element.style.width = `${size}px`;
+            element.style.height = `${size}px`;
+            
+            // Random position
+            element.style.left = `${Math.random() * 100}vw`;
+            element.style.top = `${Math.random() * 100}vh`;
+            
+            // Random animation duration between 15 and 40 seconds
+            const duration = Math.random() * 25 + 15;
+            element.style.animation = `float ${duration}s ease-in-out infinite`;
+            element.style.animationDelay = `${Math.random() * -20}s`;
+            
+            container.appendChild(element);
+        }
+    }
+});
+
+// Theme toggle with updated particle colors
 const themeToggle = document.getElementById('themeToggle');
 themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('dark-theme');
     themeToggle.innerHTML = document.body.classList.contains('dark-theme') ? 
         '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     
-    // Update particles color based on theme
-    const particleColor = document.body.classList.contains('dark-theme') ? "#6d8dff" : "#4a6fff";
-    pJSDom[0].pJS.particles.color.value = particleColor;
-    pJSDom[0].pJS.particles.line_linked.color = particleColor;
+    // Update particles for dark/light theme
+    const particleColors = document.body.classList.contains('dark-theme') 
+        ? ["#6d8dff", "#38caff", "#ff64c8", "#A876FF"] 
+        : ["#4a6fff", "#38caff", "#ff64c8", "#836FFF"];
+        
+    pJSDom[0].pJS.particles.color.value = particleColors;
+    pJSDom[0].pJS.particles.line_linked.color = particleColors[0];
     pJSDom[0].pJS.fn.particlesRefresh();
+    
+    // Update floating elements colors
+    document.querySelectorAll('.floating-element').forEach(element => {
+        const colors = ['var(--primary-color)', 'var(--secondary-color)', 'var(--accent-color)'];
+        element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    });
 });
 
 // Scroll progress indicator
