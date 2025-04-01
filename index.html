@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricardo Uriegas - UX Designer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #4a6fff;
+            --secondary-color: #38caff;
+            --accent-color: #ff64c8;
+            --text-color: #333;
+            --bg-color: #f5f8ff;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark-theme {
+            --primary-color: #6d8dff;
+            --secondary-color: #38caff;
+            --accent-color: #ff64c8;
+            --text-color: #e0e0e0;
+            --bg-color: #121212;
+            --card-bg: rgba(30, 30, 30, 0.8);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.5s ease;
+            overflow-x: hidden;
+        }
+        
+        .particle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+        
+        .theme-toggle {
+            background: var(--card-bg);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+        
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 60px;
+        }
+        
+        .hero-content {
+            flex: 1;
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            perspective: 1000px;
+        }
+        
+        .profile-card {
+            width: 300px;
+            height: 300px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition: transform 0.6s ease;
+        }
+        
+        .profile-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-card:hover .profile-info {
+            transform: translateY(0);
+        }
+        
+        .profile-card:hover {
+            transform: rotateY(15deg);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: slideUp 0.8s forwards;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: slideUp 0.8s forwards 0.2s;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        
+        section {
+            margin-bottom: 100px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .about-section {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .skill-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .skill-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            height: 300px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-img {
+            height: 60%;
+            overflow: hidden;
+        }
+        
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .project-card:hover .project-img img {
+            transform: scale(1.1);
+        }
+        
+        .project-info {
+            padding: 20px;
+        }
+        
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .contact-section {
+            text-align: center;
+        }
+        
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-method {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+        
+        .contact-method:hover {
+            transform: translateY(-10px);
+        }
+        
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 100px;
+            position: relative;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-10px) rotate(360deg);
+            color: var(--accent-color);
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.1s ease;
+            z-index: 1000;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-image {
+                margin-top: 40px;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .projects-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress"></div>
+    <div class="particle-container" id="particles-js"></div>
+    
+    <div class="page-container">
+        <header>
+            <!-- <div class="logo">UR</div> -->
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+        
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Ricardo Uriegas</h1>
+                <h2>UX Designer & IT Engineer</h2>
+                <p>Creando experiencias digitales que conectan personas y tecnología.</p>
+            </div>
+            <div class="hero-image">
+                <div class="profile-card">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Snoopy_Peanuts.png/220px-Snoopy_Peanuts.png" alt="Ricardo Uriegas">
+                    <div class="profile-info">
+                        <h3>Ricardo Uriegas</h3>
+                        <p>UX Designer & IT Engineer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <section id="about" class="about-section">
+            <h2 class="section-title">Sobre mí</h2>
+            <p>Soy un diseñador UX apasionado por la tecnología, la experiencia de usuario y la optimización de interfaces digitales. Mi enfoque se basa en la creación de productos que no solo sean funcionales, sino también estéticamente atractivos e intuitivos.</p>
+            
+            <p>Con una sólida formación en ingeniería en IT, combino habilidades de programación con principios de diseño centrados en el usuario para desarrollar experiencias digitales innovadoras. Me especializo en diseñar interfaces accesibles, minimalistas y eficientes, inspiradas en la filosofía de Apple, donde la simplicidad y la elegancia se encuentran con la funcionalidad.</p>
+            
+            <p>Además de mi experiencia en diseño UX/UI, tengo un fuerte dominio en desarrollo front-end, lo que me permite materializar mis diseños en prototipos interactivos de alta fidelidad. Disfruto resolviendo problemas complejos con soluciones creativas y efectivas, siempre priorizando las necesidades y emociones del usuario final.</p>
+            
+            <p>Mi trabajo se basa en la investigación, la iteración constante y la validación con usuarios para garantizar que cada producto digital cumpla con los más altos estándares de usabilidad y accesibilidad.</p>
+            
+            <p>Cuando no estoy diseñando, me encanta explorar nuevas tecnologías, perfeccionar mis habilidades en desarrollo y disfrutar de la naturaleza, siempre buscando inspiración en los pequeños detalles del mundo que nos rodea.</p>
+        </section>
+        
+        <section id="skills">
+            <h2 class="section-title">Mis Habilidades</h2>
+            <div class="skills-grid">
+                <div class="skill-card" data-skill="UI Design">
+                    <div class="skill-icon"><i class="fas fa-paint-brush"></i></div>
+                    <h3>UI Design</h3>
+                </div>
+                <div class="skill-card" data-skill="UX Research">
+                    <div class="skill-icon"><i class="fas fa-search"></i></div>
+                    <h3>UX Research</h3>
+                </div>
+                <div class="skill-card" data-skill="Prototyping">
+                    <div class="skill-icon"><i class="fas fa-sitemap"></i></div>
+                    <h3>Prototyping</h3>
+                </div>
+                <div class="skill-card" data-skill="HTML/CSS">
+                    <div class="skill-icon"><i class="fas fa-code"></i></div>
+                    <h3>HTML/CSS</h3>
+                </div>
+                <div class="skill-card" data-skill="JavaScript">
+                    <div class="skill-icon"><i class="fab fa-js"></i></div>
+                    <h3>JavaScript</h3>
+                </div>
+                <div class="skill-card" data-skill="Figma">
+                    <div class="skill-icon"><i class="fab fa-figma"></i></div>
+                    <h3>Figma</h3>
+                </div>
+                <div class="skill-card" data-skill="Adobe XD">
+                    <div class="skill-icon"><i class="fab fa-adobe"></i></div>
+                    <h3>Adobe XD</h3>
+                </div>
+                <div class="skill-card" data-skill="User Testing">
+                    <div class="skill-icon"><i class="fas fa-users"></i></div>
+                    <h3>User Testing</h3>
+                </div>
+            </div>
+        </section>
+        
+        <section id="projects">
+            <h2 class="section-title">Proyectos Destacados</h2>
+            <div class="projects-container">
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://source.unsplash.com/random/400x300/?app" alt="Proyecto 1">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Rediseño de App Móvil</h3>
+                        <p>Mejora de la experiencia de usuario para una aplicación de comercio electrónico.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://source.unsplash.com/random/400x300/?website" alt="Proyecto 2">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Portal Web Responsivo</h3>
+                        <p>Diseño y desarrollo de un portal web con enfoque en accesibilidad.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="https://source.unsplash.com/random/400x300/?dashboard" alt="Proyecto 3">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Dashboard Analytics</h3>
+                        <p>Interfaz de usuario para visualización de datos en tiempo real.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="contact-section">
+            <h2 class="section-title">Contáctame</h2>
+            <p>¿Interesado en trabajar juntos? ¡Hablemos!</p>
+            <div class="contact-methods">
+                <div class="contact-method">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <h3>Email</h3>
+                    <p>ricardouriegas@example.com</p>
+                </div>
+                <div class="contact-method">
+                    <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                    <h3>Teléfono</h3>
+                    <p>+52 123 456 7890</p>
+                </div>
+                <div class="contact-method">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h3>Ubicación</h3>
+                    <p>Ciudad de México, México</p>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>© 2023 Ricardo Uriegas. Todos los derechos reservados.</p>
+            <div class="social-icons">
+                <a href="https://github.com/ricardouriegas" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="#" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                <a href="#" target="_blank" class="social-icon"><i class="fab fa-dribbble"></i></a>
+                <a href="#" target="_blank" class="social-icon"><i class="fab fa-behance"></i></a>
+            </div>
+        </footer>
+    </div>
+    
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particle.js configuration
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#6d8dff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#6d8dff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 1 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+        
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            themeToggle.innerHTML = document.body.classList.contains('dark-theme') ? 
+                '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            
+            // Update particles color based on theme
+            const particleColor = document.body.classList.contains('dark-theme') ? "#6d8dff" : "#4a6fff";
+            pJSDom[0].pJS.particles.color.value = particleColor;
+            pJSDom[0].pJS.particles.line_linked.color = particleColor;
+            pJSDom[0].pJS.fn.particlesRefresh();
+        });
+        
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            document.querySelector('.scroll-progress').style.width = scrollPercent + '%';
+            
+            // Show/hide back to top button
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+            
+            // Reveal sections on scroll
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < window.innerHeight - 150) {
+                    section.classList.add('visible');
+                }
+            });
+        });
+        
+        // Back to top functionality
+        document.getElementById('backToTop').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Skill cards interaction
+        const skillCards = document.querySelectorAll('.skill-card');
+        skillCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Create a pop-up when clicking on a skill
+                const skillName = card.getAttribute('data-skill');
+                alert(`${skillName}: Esta es una de mis principales habilidades!`);
+            });
+        });
+        
+        // 3D tilt effect for project cards
+        const projectCards = document.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const cardRect = card.getBoundingClientRect();
+                const x = e.clientX - cardRect.left;
+                const y = e.clientY - cardRect.top;
+                
+                const centerX = cardRect.width / 2;
+                const centerY = cardRect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            });
+        });
+        
+        // Initialize sections visibility
+        document.querySelectorAll('section').forEach(section => {
+            if (section.getBoundingClientRect().top < window.innerHeight) {
+                section.classList.add('visible');
+            }
+        });
+    </script>
+</body>
+</html>
