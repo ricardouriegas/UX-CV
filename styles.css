@@ -167,6 +167,11 @@ header {
     -webkit-backdrop-filter: blur(var(--blur-effect));
 }
 
+/* Add yellow color for sun icon in dark mode */
+.dark-theme .theme-toggle .fa-sun {
+    color: #FFD700;
+}
+
 .theme-toggle:hover {
     transform: rotate(180deg);
 }
