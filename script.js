@@ -95,10 +95,16 @@ skillCards.forEach(card => {
     });
 });
 
-// 3D tilt effect for project cards
+// Improved 3D tilt effect for project cards - more responsive
 const projectCards = document.querySelectorAll('.project-card');
 projectCards.forEach(card => {
+    let timer;
+    
     card.addEventListener('mousemove', e => {
+        // Clear any existing timer to prevent animation lag
+        if (timer) clearTimeout(timer);
+        
+        // Calculate the position
         const cardRect = card.getBoundingClientRect();
         const x = e.clientX - cardRect.left;
         const y = e.clientY - cardRect.top;
@@ -106,14 +112,19 @@ projectCards.forEach(card => {
         const centerX = cardRect.width / 2;
         const centerY = cardRect.height / 2;
         
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
+        // Limit the rotation to a smaller range for more subtle effect
+        const rotateX = ((y - centerY) / 15).toFixed(1);
+        const rotateY = ((centerX - x) / 15).toFixed(1);
         
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        // Apply the transform immediately without additional processing
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
     });
     
     card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        // Set a small timeout to prevent jittery transitions when mouse moves quickly
+        timer = setTimeout(() => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        }, 100);
     });
 });
 
