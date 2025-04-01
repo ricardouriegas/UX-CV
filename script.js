@@ -1,21 +1,21 @@
-// Particle.js configuration
+// Particle.js configuration - more Apple-like subtle particles
 particlesJS("particles-js", {
     particles: {
-        number: { value: 80, density: { enable: true, value_area: 800 } },
+        number: { value: 30, density: { enable: true, value_area: 800 } },
         color: { value: "#6d8dff" },
         shape: { type: "circle" },
-        opacity: { value: 0.5, random: true },
-        size: { value: 3, random: true },
+        opacity: { value: 0.3, random: true, anim: { enable: true, speed: 0.2, opacity_min: 0.1, sync: false } },
+        size: { value: 2, random: true },
         line_linked: {
             enable: true,
             distance: 150,
             color: "#6d8dff",
-            opacity: 0.4,
+            opacity: 0.2,
             width: 1
         },
         move: {
             enable: true,
-            speed: 2,
+            speed: 1,
             direction: "none",
             random: true,
             straight: false,
@@ -26,13 +26,13 @@ particlesJS("particles-js", {
     interactivity: {
         detect_on: "canvas",
         events: {
-            onhover: { enable: true, mode: "grab" },
+            onhover: { enable: true, mode: "bubble" },
             onclick: { enable: true, mode: "push" },
             resize: true
         },
         modes: {
-            grab: { distance: 140, line_linked: { opacity: 1 } },
-            push: { particles_nb: 4 }
+            bubble: { distance: 200, size: 3, duration: 2, opacity: 0.3, speed: 3 },
+            push: { particles_nb: 2 }
         }
     },
     retina_detect: true
@@ -73,6 +73,19 @@ window.addEventListener('scroll', () => {
         const sectionTop = section.getBoundingClientRect().top;
         if (sectionTop < window.innerHeight - 150) {
             section.classList.add('visible');
+        }
+    });
+    
+    // Add parallax effect to skill and project cards
+    const cards = document.querySelectorAll('.skill-card, .project-card');
+    cards.forEach(card => {
+        const scrollPosition = window.scrollY;
+        const cardPosition = card.getBoundingClientRect().top + scrollPosition;
+        const distance = scrollPosition - cardPosition;
+        const translateY = distance * 0.05;
+        
+        if (Math.abs(translateY) < 25) {
+            card.style.transform = `translateY(${translateY}px)`;
         }
     });
 });
@@ -125,6 +138,20 @@ projectCards.forEach(card => {
         timer = setTimeout(() => {
             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
         }, 100);
+    });
+});
+
+// Improved card hover effect
+const allCards = document.querySelectorAll('.skill-card, .project-card, .contact-method');
+allCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        // Add subtle glow effect on hover
+        card.style.boxShadow = `0 10px 30px rgba(var(--primary-color), 0.2), 0 0 15px rgba(var(--primary-color), 0.15)`;
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        // Remove glow effect
+        card.style.boxShadow = '';
     });
 });
 

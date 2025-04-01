@@ -6,23 +6,25 @@
 }
 
 :root {
-    --primary-color: #4a6fff;
+    --primary-color: #2772fd;
     --secondary-color: #38caff;
     --accent-color: #ff64c8;
-    --text-color: #333;
+    --text-color: #333333;
     --bg-color: #f5f8ff;
-    --card-bg: rgba(255, 255, 255, 0.8);
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --blur-effect: 15px;
+    --border-radius: 20px;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
 }
 
 .dark-theme {
-    --primary-color: #6d8dff;
+    --primary-color: #5d8dff;
     --secondary-color: #38caff;
     --accent-color: #ff64c8;
-    --text-color: #e0e0e0;
-    --bg-color: #121212;
-    --card-bg: rgba(30, 30, 30, 0.8);
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --text-color: #f5f5f7;
+    --bg-color: #1c1c1e;
+    --card-bg: rgba(40, 40, 45, 0.7);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 body {
@@ -30,6 +32,25 @@ body {
     color: var(--text-color);
     transition: all 0.5s ease;
     overflow-x: hidden;
+    background-image: linear-gradient(135deg, var(--bg-color), var(--bg-color) 75%, rgba(var(--primary-color), 0.05));
+    line-height: 1.6;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.4;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 .particle-container {
@@ -60,7 +81,7 @@ header {
     top: 20px;
     right: 20px;
     background: var(--card-bg);
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -72,6 +93,8 @@ header {
     box-shadow: var(--shadow);
     transition: transform 0.3s ease;
     z-index: 1000;
+    backdrop-filter: blur(var(--blur-effect));
+    -webkit-backdrop-filter: blur(var(--blur-effect));
 }
 
 .theme-toggle:hover {
@@ -101,12 +124,15 @@ header {
     height: 300px;
     background: var(--card-bg);
     border-radius: 20px;
-    box-shadow: var(--shadow);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     position: relative;
     transform-style: preserve-3d;
     transform: rotateY(0deg);
     transition: transform 0.6s ease;
+    backdrop-filter: blur(var(--blur-effect));
+    -webkit-backdrop-filter: blur(var(--blur-effect));
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .profile-card img {
@@ -146,6 +172,7 @@ h1 {
     transform: translateY(30px);
     opacity: 0;
     animation: slideUp 0.8s forwards;
+    letter-spacing: -1px;
 }
 
 h2 {
@@ -163,6 +190,7 @@ h2 {
     text-align: center;
     position: relative;
     display: inline-block;
+    letter-spacing: -0.5px;
 }
 
 .section-title::after {
@@ -171,9 +199,10 @@ h2 {
     bottom: -10px;
     left: 0;
     width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), transparent);
     border-radius: 2px;
+    opacity: 0.8;
 }
 
 section {
@@ -195,6 +224,10 @@ section.visible {
     box-shadow: var(--shadow);
     position: relative;
     overflow: hidden;
+    line-height: 1.8;
+    backdrop-filter: blur(var(--blur-effect));
+    -webkit-backdrop-filter: blur(var(--blur-effect));
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .about-section::before {
@@ -206,7 +239,7 @@ section.visible {
     height: 200px;
     background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
     border-radius: 50%;
-    opacity: 0.1;
+    opacity: 0.05;
 }
 
 .skills-grid {
@@ -226,6 +259,9 @@ section.visible {
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    backdrop-filter: blur(var(--blur-effect));
+    -webkit-backdrop-filter: blur(var(--blur-effect));
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .skill-card:hover {
@@ -240,10 +276,11 @@ section.visible {
     left: 0;
     width: 100%;
     height: 5px;
-    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    background: var(--primary-color);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
+    opacity: 0.7;
 }
 
 .skill-card:hover::before {
@@ -265,7 +302,7 @@ section.visible {
 
 .project-card {
     background: var(--card-bg);
-    border-radius: 15px;
+    border-radius: var(--border-radius);
     overflow: hidden;
     box-shadow: var(--shadow);
     transition: transform 0.2s ease-out, box-shadow 0.4s ease; /* Faster transform transition */
@@ -273,6 +310,8 @@ section.visible {
     min-height: 300px;
     position: relative;
     cursor: pointer;
+    backdrop-filter: blur(var(--blur-effect));
+    -webkit-backdrop-filter: blur(var(--blur-effect));
 }
 
 .project-card:hover {
@@ -283,6 +322,7 @@ section.visible {
 .project-img {
     height: 60%;
     overflow: hidden;
+    position: relative;
 }
 
 .project-img img {
@@ -290,6 +330,17 @@ section.visible {
     height: 100%;
     object-fit: cover;
     transition: transform 0.6s ease;
+}
+
+.project-img::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to top, var(--card-bg), transparent);
+    z-index: 1;
 }
 
 .project-card:hover .project-img img {
@@ -355,6 +406,8 @@ section.visible {
     box-shadow: var(--shadow);
     transition: all 0.3s ease;
     min-width: 200px;
+    backdrop-filter: blur(var(--blur-effect));
+    -webkit-backdrop-filter: blur(var(--blur-effect));
 }
 
 .contact-method:hover {
@@ -393,6 +446,8 @@ footer {
     color: var(--primary-color);
     transition: all 0.3s ease;
     box-shadow: var(--shadow);
+    backdrop-filter: blur(var(--blur-effect));
+    -webkit-backdrop-filter: blur(var(--blur-effect));
 }
 
 .social-icon:hover {
@@ -430,6 +485,8 @@ footer {
     transform: translateY(20px);
     transition: all 0.3s ease;
     z-index: 100;
+    backdrop-filter: blur(var(--blur-effect));
+    -webkit-backdrop-filter: blur(var(--blur-effect));
 }
 
 .back-to-top.visible {
@@ -467,4 +524,14 @@ footer {
     .projects-container {
         grid-template-columns: 1fr;
     }
+
+    :root {
+        --blur-effect: 10px;
+    }
+}
+
+.skill-card:hover, 
+.project-card:hover, 
+.contact-method:hover {
+    border-color: rgba(var(--primary-color), 0.3);
 }
