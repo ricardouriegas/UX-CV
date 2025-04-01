@@ -266,7 +266,8 @@ section.visible {
     overflow: hidden;
     box-shadow: var(--shadow);
     transition: all 0.4s ease;
-    height: 300px;
+    height: auto;
+    min-height: 300px;
     position: relative;
     cursor: pointer;
 }
@@ -293,13 +294,13 @@ section.visible {
 }
 
 .project-info {
-    padding: 20px;
+    padding: 15px;
+    font-size: 0.95rem;
 }
 
-.project-title {
-    font-size: 1.3rem;
-    margin-bottom: 10px;
-    font-weight: bold;
+.project-info p {
+    margin-bottom: 8px;
+    line-height: 1.4;
 }
 
 /* Education section styling - same as projects for consistency */
@@ -315,6 +316,21 @@ section.visible {
 /* Hobbies section styling */
 #hobbies .skills-grid {
     margin-bottom: 20px;
+}
+
+/* Adjust experience section specifically */
+#projects .project-card {
+    height: auto;
+    min-height: 330px;
+}
+
+#projects .project-img {
+    height: 180px;
+}
+
+/* Make certifications card taller as it has more content */
+#projects .project-card:last-child {
+    min-height: 350px;
 }
 
 .contact-section {
