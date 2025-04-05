@@ -175,6 +175,11 @@ const projectCards = document.querySelectorAll('.project-card');
 projectCards.forEach(card => {
     let timer;
     
+    // Skip 3D tilt effect for UX project cards
+    if (card.closest('#ux-projects')) {
+        return;
+    }
+    
     card.addEventListener('mousemove', e => {
         // Clear any existing timer to prevent animation lag
         if (timer) clearTimeout(timer);
@@ -207,8 +212,12 @@ projectCards.forEach(card => {
 const allCards = document.querySelectorAll('.skill-card, .project-card, .contact-method');
 allCards.forEach(card => {
     card.addEventListener('mouseenter', () => {
-        // Add subtle glow effect on hover
-        card.style.boxShadow = `0 10px 30px rgba(var(--primary-color), 0.2), 0 0 15px rgba(var(--primary-color), 0.15)`;
+        // Add subtle glow effect on hover, but less intense for UX project cards
+        if (card.closest('#ux-projects')) {
+            card.style.boxShadow = `0 10px 20px rgba(0, 0, 0, 0.1)`;
+        } else {
+            card.style.boxShadow = `0 10px 30px rgba(var(--primary-color), 0.2), 0 0 15px rgba(var(--primary-color), 0.15)`;
+        }
     });
     
     card.addEventListener('mouseleave', () => {
