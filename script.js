@@ -211,6 +211,17 @@ projectCards.forEach(card => {
 // Improved card hover effect
 const allCards = document.querySelectorAll('.skill-card, .project-card, .contact-method');
 allCards.forEach(card => {
+    // Check if the card contains a link
+    const linkElement = card.querySelector('a');
+    const hasLink = linkElement !== null;
+    
+    // Set cursor style based on whether the card has a link
+    if (hasLink) {
+        card.style.cursor = 'pointer';
+    } else {
+        card.style.cursor = 'default';
+    }
+    
     card.addEventListener('mouseenter', () => {
         // Add subtle glow effect on hover, but less intense for UX project cards
         if (card.closest('#ux-projects')) {
@@ -224,6 +235,32 @@ allCards.forEach(card => {
         // Remove glow effect
         card.style.boxShadow = '';
     });
+    
+    // Make the entire card clickable if it contains a link
+    if (hasLink) {
+        card.addEventListener('click', (e) => {
+            // Only navigate if the click wasn't directly on the link element
+            // This prevents duplicate navigation when clicking the actual link
+            if (!e.target.closest('a')) {
+                const href = linkElement.getAttribute('href');
+                const target = linkElement.getAttribute('target');
+                
+                if (target === '_blank') {
+                    window.open(href, '_blank');
+                } else {
+                    window.location.href = href;
+                }
+            }
+        });
+    }
+});
+
+// Update skill cards cursor style
+skillCards.forEach(card => {
+    // We don't want skill cards to show pointer cursor unless they have links
+    if (!card.querySelector('a')) {
+        card.style.cursor = 'default';
+    }
 });
 
 // Initialize sections visibility
