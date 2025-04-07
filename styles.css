@@ -665,6 +665,12 @@ body.dark-theme .contact-method {
     -webkit-text-fill-color: transparent;
     padding: 5px 10px;
     border-radius: 8px;
+    cursor: pointer; /* Add cursor pointer to indicate clickability */
+    transition: transform 0.3s ease; /* Add transition for hover effect */
+}
+
+.nav-logo:hover {
+    transform: scale(1.05); /* Slight scale effect on hover */
 }
 
 .nav-links {

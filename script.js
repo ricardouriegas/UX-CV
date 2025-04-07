@@ -277,6 +277,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.querySelector('.navbar');
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
+    const navLogo = document.getElementById('nav-logo');
+    
+    // Make logo clickable - scroll to top when clicked
+    navLogo.style.cursor = 'pointer';
+    navLogo.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
     
     // Toggle mobile menu
     menuToggle.addEventListener('click', () => {
