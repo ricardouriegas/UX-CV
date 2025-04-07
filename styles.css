@@ -834,16 +834,6 @@ body.dark-theme .contact-method {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* UX focused skills styling */
-.ux-skill {
-    border: 2px solid var(--accent-color);
-    transform: scale(1.05);
-}
-
-.ux-skill .skill-icon {
-    color: var(--accent-color);
-}
-
 /* Add hero UX section styling */
 .hero-ux-badge {
     display: inline-block;
