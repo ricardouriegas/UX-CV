@@ -744,3 +744,132 @@ body.dark-theme .contact-method {
         padding: 15px 20px;
     }
 }
+
+/* UX Projects Enhanced Styling */
+#ux-projects {
+    margin-top: -20px;  /* Negative margin to bring it up */
+    margin-bottom: 120px;
+    position: relative;
+}
+
+#ux-projects .section-title {
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 40px;
+}
+
+#ux-projects .section-title::after {
+    background: linear-gradient(90deg, var(--accent-color), var(--primary-color), transparent);
+    height: 4px;
+    bottom: -12px;
+}
+
+#ux-projects .projects-container {
+    gap: 40px;
+    margin-top: 50px;
+}
+
+#ux-projects .project-card {
+    border: 2px solid transparent;
+    transition: all 0.4s ease;
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    min-height: 380px;
+}
+
+#ux-projects .project-card:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-12px);
+    box-shadow: 0 15px 30px rgba(var(--accent-color), 0.15);
+}
+
+#ux-projects .project-img {
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+}
+
+#ux-projects .project-info {
+    padding: 20px;
+}
+
+#ux-projects .project-title {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+#ux-projects .project-info a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 16px;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+#ux-projects .project-info a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(var(--accent-color), 0.3);
+}
+
+/* UX highlight badge */
+.ux-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 10;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* UX focused skills styling */
+.ux-skill {
+    border: 2px solid var(--accent-color);
+    transform: scale(1.05);
+}
+
+.ux-skill .skill-icon {
+    color: var(--accent-color);
+}
+
+/* Add hero UX section styling */
+.hero-ux-badge {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s forwards 0.5s;
+    opacity: 0;
+}
+
+/* Responsive adjustments for UX Projects */
+@media (max-width: 768px) {
+    #ux-projects .projects-container {
+        gap: 30px;
+    }
+    
+    #ux-projects .project-card {
+        min-height: 350px;
+    }
+    
+    #ux-projects .project-img {
+        height: 180px;
+    }
+}
