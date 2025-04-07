@@ -209,7 +209,7 @@ projectCards.forEach(card => {
 });
 
 // Improved card hover effect
-const allCards = document.querySelectorAll('.skill-card, .project-card, .contact-method');
+const allCards = document.querySelectorAll('.skill-card, .project-card, .contact-method, .certificate-card');
 allCards.forEach(card => {
     // Check if the card contains a link
     const linkElement = card.querySelector('a');
