@@ -929,6 +929,14 @@ body.dark-theme .contact-method {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   animation: fadeIn 1s forwards 0.5s;
   opacity: 0;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.hero-ux-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive adjustments for UX Projects */
