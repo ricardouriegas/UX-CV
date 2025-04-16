@@ -123,10 +123,12 @@ window.addEventListener('scroll', () => {
     
     // Show/hide back to top button
     const backToTop = document.getElementById('backToTop');
-    if (scrollTop > 300) {
-        backToTop.classList.add('visible');
-    } else {
-        backToTop.classList.remove('visible');
+    if (backToTop) {
+        if (scrollTop > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
     }
     
     // Reveal sections on scroll
