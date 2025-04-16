@@ -153,12 +153,15 @@ window.addEventListener('scroll', () => {
 });
 
 // Back to top functionality
-document.getElementById('backToTop').addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+const backToTopBtn = document.getElementById('backToTop');
+if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     });
-});
+}
 
 // Skill cards interaction
 const skillCards = document.querySelectorAll('.skill-card');
@@ -294,13 +297,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelector('.nav-links');
     const navLogo = document.getElementById('nav-logo');
     
-    // Make logo clickable - scroll to top when clicked
+    // Make logo clickable - go to welcome page
     navLogo.style.cursor = 'pointer';
     navLogo.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+        window.location.href = 'index.html';     
     });
     
     // Toggle mobile menu
