@@ -1227,3 +1227,32 @@ body.dark-theme .contact-method {
     margin: 0;     /* Eliminar márgenes automáticos */
     flex: 0 0 auto; /* Evitar que las tarjetas se estiren */
 }
+
+/* Highlighted Final Certificate Styles */
+.highlight-certificate {
+    border: 2.5px solid var(--accent-color);
+    box-shadow: 0 0 25px 0 rgba(255,100,200,0.15), 0 8px 32px 0 rgba(39,114,253,0.12);
+    background: linear-gradient(135deg, var(--card-bg) 80%, rgba(255,100,200,0.07));
+    position: relative;
+    z-index: 2;
+}
+
+.highlight-certificate-icon {
+    background: linear-gradient(135deg, #2772fd, #ff64c8) !important;
+    font-size: 2.2rem !important;
+}
+
+.highlight-certificate-title {
+    color: var(--accent-color) !important;
+    font-size: 1.25rem !important;
+}
+
+.highlight-certificate-desc {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.highlight-certificate-link {
+    background: linear-gradient(135deg, var(--accent-color), var(--primary-color)) !important;
+    font-weight: bold !important;
+}
