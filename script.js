@@ -174,12 +174,27 @@ skillCards.forEach(card => {
 const projectCards = document.querySelectorAll('.project-card');
 projectCards.forEach(card => {
     let timer;
-    
-    // Skip 3D tilt effect for UX project cards
+
+    // If it's a UX project card, clicking should go to Hi-Fi Design
     if (card.closest('#ux-projects')) {
-        return;
+        card.addEventListener('click', (e) => {
+            // Only trigger if not clicking a link directly
+            if (!e.target.closest('a')) {
+                const hiFiLink = card.querySelector('a[href*="Hi-Fi"],a[href*="hi-fi"],a[href*="node-id=6-330"],a[href*="node-id=2659-58"],a[href*="node-id=4626-1933"],a[href*="node-id=2619-2108"]');
+                if (hiFiLink) {
+                    const href = hiFiLink.getAttribute('href');
+                    const target = hiFiLink.getAttribute('target');
+                    if (target === '_blank') {
+                        window.open(href, '_blank');
+                    } else {
+                        window.location.href = href;
+                    }
+                }
+            }
+        });
+        return; // Skip 3D tilt for UX project cards
     }
-    
+
     card.addEventListener('mousemove', e => {
         // Clear any existing timer to prevent animation lag
         if (timer) clearTimeout(timer);
